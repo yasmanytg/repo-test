@@ -28,3 +28,4 @@ jobs:
         run: |
           echo "${RELEASE_TYPE}"
           echo "${{ github.event.inputs.params }}"
+          perl -pi -w -e 's/!tg-modern-common\/\*\*/project\/\*\*/g;' package.json 
