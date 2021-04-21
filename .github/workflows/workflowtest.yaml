@@ -1,0 +1,30 @@
+name: Release npm package for tg-modern-common
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Release Type (patch, minor, major):'
+        required: true
+      params:
+        description: 'Extra parameters to pass multi-semantic-release:'
+        required: false
+
+jobs:
+  release:
+    name: Publish tg-modern-common package
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["14"]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: test
+        env:
+          RELEASE_TYPE: ${{ github.event.inputs.release_type }}
+        run: |
+          echo "${RELEASE_TYPE}"
+          echo "${{ github.event.inputs.params }}"
